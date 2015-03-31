@@ -1,0 +1,33 @@
+{
+  "name": "hapi-brickloader-demo",
+  "version": "0.1.0",
+  "description": "A demo of hapi-brickloader",
+  "main": "api.js",
+  "scripts": {
+    "test": "lab api/**/*.spec.js",
+    "start": "node api.js"
+  },
+  "dependencies": {
+    "async": "^0.9.0",
+    "good": "^5.1.2",
+    "good-console": "^4.1.0",
+    "hapi": "^8.4.0",
+    "joi": "^5.1.0",
+    "mongoose": "^4.0.1",
+    "require-directory": "^2.1.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "ssh://git@github.com:Caligone/hapi-brickloader-demo.git"
+  },
+  "keywords": [
+    "api",
+    "hapi"
+  ],
+  "author": "Caligone",
+  "private": true,
+  "devDependencies": {
+    "code": "^1.3.0",
+    "lab": "^5.5.1"
+  }
+}
