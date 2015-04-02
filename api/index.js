@@ -11,7 +11,7 @@ server.connection({ port: config.port });
 
 server.register(Plugins, function (err) {
     server.start(function(err) {
-        console.log('Server is runing...');
+        console.log('Server is running...');
     });
 });
 

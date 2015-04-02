@@ -7,7 +7,7 @@ module.exports = [
         method: 'POST',
         path: '/',
         handler: function (request, reply) {
-            request.server.plugins.brickloader.Base.BaseModel.create({label: 'Hi !'}).then(function (err, data) {
+            request.server.plugins.BaseBrick.BaseModel.create({label: 'Hi !'}).then(function (err, data) {
                 reply(err);
             });
         }

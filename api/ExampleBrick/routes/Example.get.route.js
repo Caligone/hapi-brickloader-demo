@@ -7,7 +7,7 @@ module.exports = [
         method: 'GET',
         path: '/example',
         handler: function (request, reply) {
-            request.server.plugins.brickloader.Example.ExampleModel.find({}).exec(function (err, data) {
+            request.server.plugins.BaseExample.ExampleModel.find({}).exec(function (err, data) {
                 reply(data);
             });
         }

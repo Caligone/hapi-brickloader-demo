@@ -7,7 +7,8 @@ module.exports = [
         method: 'GET',
         path: '/',
         handler: function (request, reply) {
-            request.server.plugins.brickloader.Base.BaseModel.find({}).exec(function (err, data) {
+            console.log(request.server.plugins);
+            request.server.plugins.BaseBrick.BaseModel.find({}).exec(function (err, data) {
                 reply(data);
             });
         }

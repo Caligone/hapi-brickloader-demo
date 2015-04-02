@@ -1,9 +1,10 @@
 'use strict';
 
-var BrickLoader = require('./brickloader');
+var Brick = require('./Brick');
+var BaseBrick = require('./BaseBrick');
 var Database = require('./database');
 
 module.exports = [
     Database,
-    BrickLoader
+    BaseBrick
 ];

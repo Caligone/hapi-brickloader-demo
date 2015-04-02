@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "async": "^0.9.0",
+    "glue": "^2.0.0",
     "good": "^5.1.2",
     "good-console": "^4.1.0",
     "hapi": "^8.4.0",
