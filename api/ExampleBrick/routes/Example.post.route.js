@@ -7,7 +7,7 @@ module.exports = [
         method: 'POST',
         path: '/example',
         handler: function (request, reply) {
-            request.server.plugins.BaseExample.ExampleModel.create({label: 'Hi !'}).then(function (err, data) {
+            request.server.plugins.ExampleBrick.ExampleModel.create({label: 'Hi !'}).then(function (err, data) {
                 reply(err);
             });
         }

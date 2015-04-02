@@ -1,7 +1,8 @@
 'use strict';
 
-var requireDirectory = require('require-directory'),
+var path = require('path'),
     async = require('async'),
+    glob = require('glob'),
     _ = require('underscore');
 
 module.exports = function Brick (dirname, opts) {
@@ -20,61 +21,28 @@ module.exports = function Brick (dirname, opts) {
         throw new Error('‘options.attributes.name‘ must be defined');
     }
 
-    this.dirname = dirname;
     this.register = function (server, options, next) {
         async.auto({
             // Load the routes
             routes: function (endLoadRoutes) {
-                var routesRequired = requireDirectory(module, {
-                    include: function (path) {
-                        if(/.route.js$/.test(path) && path.indexOf(dirname) !== -1) {
-                            return true;
-                        }
-                        else {
-                            return false;
-                        }
-                    }
-                });
-                var routes = [];
-
-                // TODO Rewrite this to handle more than 2 levels
-                _.each(routesRequired, function (routeWithDirectory) {
-                    _.each(routeWithDirectory, function (routesWithFile) {
-                        _.each(routesWithFile, function (routesWithoutFile) {
-                            routes = routes.concat(routesWithoutFile);
-                        });
+                glob(dirname + "/**/*.route.js", options, function (err, files) {
+                    var routes = []
+                    _.each(files, function (f) {
+                        routes = routes.concat(require(f));
                     });
+                    server.route(routes);
+                    endLoadRoutes(null);
                 });
-                server.route(routes);
-                endLoadRoutes(null, routes);
             },
 
             // Load the models
             models: function (endLoadModels) {
-                var modelsRequired = requireDirectory(module, { 
-                    include: function (path) {
-                        if(/.model.js$/.test(path) && path.indexOf(dirname) !== -1) {
-                            return true;
-                        }
-                        else {
-                            return false;
-                        }
-                    }
-                });
-
-                var models = {};
-                // TODO Rewrite this to handle more than 2 levels
-                _.each(modelsRequired, function (modelsWithDirectory) {
-                    _.each(modelsWithDirectory, function (modelsWithFile, index) {
-                        _.each(modelsWithFile, function (modelsWithoutFile, index) {
-                            var modelName = index.replace('.model', '') + 'Model';
-                            var model = modelsWithoutFile(server.plugins.mongoose.db);
-                            models[modelName] = model;
-                            server.expose(modelName, model);
-                        });
+                glob(dirname + "/**/*.model.js", options, function (err, files) {
+                    _.each(files, function (f) {
+                        server.expose(path.basename(f, '.model.js') + 'Model', require(f)(server.plugins.mongoose.db));
                     });
+                    endLoadModels(null);
                 });
-                endLoadModels(null, models);
             }
         }, function (err, results) {
             console.log(opts.attributes.name + ' loaded !');

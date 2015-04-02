@@ -13,6 +13,7 @@ module.exports = {
     }],
     plugins: {
         './database': {},
-        './api/BaseBrick': {}
+        './api/BaseBrick': {},
+        './api/ExampleBrick': {}
     }
 };
